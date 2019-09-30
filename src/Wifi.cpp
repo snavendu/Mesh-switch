@@ -12,7 +12,7 @@ void Wifi::init(wifi_mode_t type)
     
     init_cfg = WIFI_INIT_CONFIG_DEFAULT();
     esp_wifi_set_storage(WIFI_STORAGE_FLASH);
-    esp_event_loop_init(handler,NULL);
+    esp_event_loop_init(NULL,NULL);
     ESP_ERROR_CHECK(esp_wifi_init(&init_cfg));
     esp_wifi_start();
     ESP_ERROR_CHECK( esp_smartconfig_set_type(SC_TYPE_ESPTOUCH) );
@@ -38,8 +38,8 @@ void  Wifi::mode_init(wifi_mode_t mode)
             esp_event_loop_init(handler,NULL);
             ESP_ERROR_CHECK(esp_wifi_set_mode(mode));
             wifi_config_t ap_cfg ; 
-            strcpy((char*)ap_cfg.ap.ssid,ap_ssid);
-            strcpy((char*)ap_cfg.ap.password,ap_password);
+            //strcpy((char*)ap_cfg.ap.ssid,ap_ssid);
+            //strcpy((char*)ap_cfg.ap.password,ap_password);
             ap_cfg.ap.authmode=WIFI_AUTH_WPA2_ENTERPRISE;
             ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_AP,&ap_cfg));
             break;

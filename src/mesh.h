@@ -12,12 +12,18 @@
 
 
 
-enum proto_t
-{
-    JSON,
-    MQTT,
-    HTTP
-};
+// enum proto_t
+// {
+//     JSON,
+//     MQTT,
+//     HTTP
+// };
+
+
+typedef struct{
+    uint8_t id;
+    uint8_t value;
+}packet;
 
 
 
@@ -25,18 +31,22 @@ class Mesh:Wifi{
 
 public:
     Mesh(mesh_type_t);
-    void sendData(mesh_addr_t,mesh_data_t,proto_t);
-    void recvData(proto_t);
+    static EventGroupHandle_t mesh_event ;
+    static const  uint8_t PARENT_CONNECTED = BIT0;
+
+    void sendData();
+    void recvData();
     void start();
     void init();
     void set_router(wifi_config_t*);
     static void callback(mesh_event_t event);
     static void event_loop();
-
+    bool isRoot=false;
 private:
     static mesh_addr_t addr;
     mesh_cfg_t cfg;
-    bool isRoot=false;
+    
+    packet on;
 };
 
 #endif

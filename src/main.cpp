@@ -12,10 +12,6 @@ extern "C" {
  int app_main(void);
 }
 
-void callback()
-{
-
-}
 
 int app_main()
 {   
@@ -30,6 +26,20 @@ int app_main()
     
     // mesh.mesh_init()
     mesh.start();
+
+    while(1)
+    {
+        if(!mesh.isRoot)
+        {
+            xEventGroupWaitBits(mesh.mesh_event,mesh.PARENT_CONNECTED,false,true,portMAX_DELAY);
+            mesh.sendData();
+            vTaskDelay(1000);
+        }
+
+        else{
+            mesh.recvData();
+        }
+    }
     
     // mesh.send(addr,data);
     // mesh.recv(addr);
